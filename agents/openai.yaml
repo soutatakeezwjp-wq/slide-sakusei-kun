@@ -1,0 +1,8 @@
+interface:
+  display_name: "スライド作成くん"
+  short_description: "Image genで日本語スライド画像とPDFを作る"
+  brand_color: "#3B82F6"
+  default_prompt: "Use $slide-sakusei-kun to turn my rough Japanese notes into friendly client-facing PNG slide images and a PDF."
+
+policy:
+  allow_implicit_invocation: true
