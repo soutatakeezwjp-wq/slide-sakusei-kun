@@ -5,8 +5,8 @@ output/
 outputs/
 generated/
 *.pdf
+*.pptx
 *.png
 *.jpg
 *.jpeg
 *.webp
-

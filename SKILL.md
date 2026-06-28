@@ -1,6 +1,6 @@
 ---
 name: slide-sakusei-kun
-description: "Use when the user says スライド作成くん or asks to create Japanese client-facing slide images with Image gen in the reusable format: 16:9 white slides, top and bottom blue bars, no recipient company name, no footer, central Image gen illustration, friendly business tone, PNG images plus a PDF."
+description: "Use when the user says スライド作成くん or asks to create Japanese client-facing slide images with Image gen in the reusable format: 16:9 white slides, mechanically consistent #78a9ff top and bottom bars, no recipient company name, no footer, central Image gen illustration, friendly business tone, PNG images plus PDF/PPTX."
 ---
 
 # スライド作成くん
@@ -13,12 +13,14 @@ description: "Use when the user says スライド作成くん or asks to create 
 - 送る先の会社名・顧客名は入れない。
 - フッターは入れない。
 - 16:9横長、白背景。
-- 上端と下端に青い横棒を入れる。
+- 上端と下端の横棒は、Image genに任せず、後処理またはPPTX上の図形で機械的に入れる。
+- 上端と下端の横棒の色は必ず `#78a9ff` に統一する。
+- Image genで作る本文画像は、上下の横棒に隠れないよう、上端・下端に十分な余白を残す。
 - 中央にはImage genで作ったビジュアルを大きく配置する。
 - 日本語文字は画像内に入れてよい。ただし詰め込みすぎない。
 - キャラクターは使用可。AIロボット、現場担当者、オフィス/製造/医療/業務担当者など、親しみやすいがカジュアルすぎない人物表現にする。
 - 生成後に画像サイズを確認する。native 4Kや最高解像度を保証する言い方はしない。
-- 出力はPNG画像とPDFを基本とする。
+- 出力はPNG画像とPDFを基本とし、必要に応じてPPTXも作る。
 
 ## デザイン言語
 
@@ -26,7 +28,8 @@ description: "Use when the user says スライド作成くん or asks to create 
 
 要点:
 - 白い余白を大きく使う。
-- 上下の青い棒は全スライドで共通化する。
+- 上下の青い棒は全スライドで完全に共通化する。色は必ず `#78a9ff`。
+- 上下の棒はPPTXの長方形や後処理スクリプトで作るのが理想。Image genに棒を描かせない。
 - タイトルは左上寄せまたは中央寄せ。大きく、読みやすく。
 - 文字色は濃紺または黒。強調色は青系を中心にし、必要な場合だけ黄色・緑・オレンジを補助的に使う。
 - 図解や人物イラストは中央に大きく。周辺に短いラベルやカードを置く。
@@ -48,15 +51,17 @@ description: "Use when the user says スライド作成くん or asks to create 
 4. 各スライドごとにImage gen用プロンプトを作る。
 5. `image_gen` でスライド画像を生成する。
 6. 生成されたPNGをプロジェクト内の分かりやすいフォルダに保存する。
-7. 必要に応じて `scripts/make_pdf_and_contact_sheet.py` でPDFと確認用コンタクトシートを作る。
-8. 最終回答ではPNGフォルダ、PDF、代表的なプレビューを短く示す。
+7. `scripts/make_pdf_and_contact_sheet.py` で、生成済みPNGを白背景16:9に収め、上下に `#78a9ff` の横棒を機械的に入れた最終PNGを書き出す。
+8. 必要に応じて、同じスクリプトでPDF、PPTX、確認用コンタクトシートを作る。
+9. 最終回答ではPNGフォルダ、PDF/PPTX、代表的なプレビューを短く示す。
 
 ## Image genプロンプトの基本形
 
 以下の要素を毎回入れる。
 
 ```text
-横長16:9の日本語ビジネススライド。白背景。上端と下端に同じ太さの青い横棒。
+横長16:9の日本語ビジネススライド。白背景。上端と下端には後処理で青い横棒を入れるため、画像生成時点では棒を描かない。
+上端と下端に十分な白い余白を残し、すべての文字・イラスト・画像が中央の安全領域に収まるようにする。
 フッターなし。送付先の会社名や顧客名は入れない。
 中央に大きな親しみやすいイラスト。AIロボットと業務担当者/現場担当者が協力している。
 濃紺の読みやすい日本語タイトル。本文は短く、3点以内。余白を広く取る。
@@ -75,5 +80,7 @@ description: "Use when the user says スライド作成くん or asks to create 
 - 送付先会社名を入れること。
 - フッターを入れること。
 - 会社ロゴを勝手に作ること。
+- Image genに上下の棒を描かせること。棒は `#78a9ff` で機械的に後付けする。
+- 上下の棒の色を `#78a9ff` 以外にすること。
 - 4K保証、最高解像度保証、native 3840x2160保証と言い切ること。
 - 装飾過多、暗い背景、派手なグラデーション、読めない細かい文字。
